@@ -28,6 +28,30 @@ function main() {
         $('#overlay').fadeIn('slow');
     }
 
+    function nextImage() {
+        //If the image is the last, loop back to the first
+        if ($('.activeImage').is(':last-child')) {
+            var firstImage = $('#gallery').children('li').first('li');
+            changeOverlay(firstImage);
+        //Otherwise keep going to the next image
+        } else {
+            var nextImage = $('.activeImage').next('li');
+            changeOverlay(nextImage);
+        }
+    }
+
+    function prevImage() {
+        //If the image is the first, loop back to the last
+        if ($('.activeImage').is(':first-child')) {
+            var lastImage = $('#gallery').children('li').last('li');
+            changeOverlay(lastImage);
+        //Otherwise keep going to the next image
+        } else {
+            var nextImage = $('.activeImage').prev('li');
+            changeOverlay(nextImage);
+        }
+    }
+
     //Stop link from opening a page to the href value
     $('#gallery a').click(function(event) {
         event.preventDefault();
@@ -39,35 +63,55 @@ function main() {
         changeOverlay(clickedImage);
     });
 
-    $('#leftArrow').on('click', function() {
-        //If the image is the first, loop back to the last
-        if ($('.activeImage').is(':first-child')) {
-            var lastImage = $('#gallery').children('li').last('li');
-            changeOverlay(lastImage);
-        //Otherwise keep going to the next image
-        } else {
-            var nextImage = $('.activeImage').prev('li');
-            changeOverlay(nextImage);
-        }
+    $('#leftArrow').on('click', function(event) {
+        event.stopPropagation();
+        prevImage();
     });
 
-    $('#rightArrow').on('click', function() {
-        //If the image is the last, loop back to the first
-        if ($('.activeImage').is(':last-child')) {
-            var firstImage = $('#gallery').children('li').first('li');
-            changeOverlay(firstImage);
-        //Otherwise keep going to the next image
-        } else {
-            var nextImage = $('.activeImage').next('li');
-            changeOverlay(nextImage);
-        }
+    $('#rightArrow').on('click', function(event) {
+        event.stopPropagation()
+        nextImage();
     });
 
-    $('#overlay').click(function() {
+    $(document).keydown(function(e) {
+        if ($('li').is('.activeImage')) {
+        } else {
+            $('#gallery').children('li').addClass('activeImage');
+        }
+        switch(e.which) {
+            case 37:
+                //If the image is the first, loop back to the last
+                prevImage();
+            break;
+
+            case 39:
+                nextImage();
+                console.log('next image');
+            break;
+        }
+
+        $('#search').keyup(function() {
+            var search = $(this).val();
+            $('img:not([' + search + '])').css('border', '3px solid red');
+            $('img:contains(["' + search + '"])').css('border', '3px solid green');
+        });
+    });
+
+    $('#overlay').click(function(event) {
         $(this).fadeOut('slow');
     });
 
-
+    $(document).scroll(function() {
+        var scrollVal = $(window).scrollTop();
+        console.log(scrollVal);
+        if (scrollVal > 0) {
+            $('#topFixed').addClass('sticky');
+            $('#topFixed').removeClass('notSticky');
+        } else {
+            $('#topFixed').removeClass('sticky');
+            $('#topFixed').addClass('notSticky');
+        }
+    });
 }
 
 $(document).ready(main());

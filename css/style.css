@@ -1,14 +1,41 @@
 *, body {
-	font-family: 'Open Sans', sans-serif;
+	font-family: 'Indie Flower', cursive;
+}
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	background: url(../img/tweed.png) repeat;
+	background-attachment: fixed;
+	background-size: cover;
 }
 
 .container {
 	width: 100%;
 }
 
+.notSticky {
+	background: none;
+	-webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    transition: all 1s ease;
+}
+
+.sticky {
+	background: rgba(0,0,0,0.5);
+	-webkit-transition: all 1s ease;
+    -moz-transition: all 1s ease;
+    -o-transition: all 1s ease;
+    transition: all 1s ease;
+    color: orange;
+}
+
 .mainCenter {
-	max-width: 980px;
 	margin: 0 auto;
+	max-width: 980px;
 }
 
 .container::after, ul::after {
@@ -20,31 +47,87 @@
 #topFixed {
 	position: fixed;
 	width: 100%;
-	max-width: 980px;
+	margin: 0 auto;
 	top: 0;
 }
 
+#fixedCont {
+	max-width: 980px;
+	margin: 0 auto;
+	padding: 0 20px 30px 20px;
+}
+
+#about {
+	margin-bottom: 50px;
+}
+
+.half p {
+	margin-top: 10px;
+	line-height: 1.6;
+	font-size: 18px;
+	color: orange;
+	padding: 10px 20px 20px 20px;
+}
+
+h3 {
+	padding: 20px 20px 0 20px;
+	color: orange;
+	font-size: 24px;
+}
+
+.half + .half p {
+	color: lightgreen;
+}
+
+.half + .half h3 {
+	color: lightgreen;
+}
+
+.clear::after {
+	display: table;
+	content: '';
+	clear: both;
+}
+
+
 input {
 	margin: 0 auto;
-	margin-top: 30px;
 	width: 100%;
-	max-width: 460px;
+	max-width: 450px;
 	display: block;
+	margin-bottom: 30px;
 	padding: 10px;
 	border-radius: 5px;
 	outline: none;
-	border: 2px solid #eee;
+	border: 2px solid white;
 }
 
-ul {
-	margin-top: 100px;
+.logo {
+	text-align: center;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	font-size: 32px;
+	color: white;
+}
+
+#about {
+	margin-top: 166px;
+}
+
+ul#gallery {
 	max-width: 980px;
 	text-align: center;
 }
 
-li {
+#gallery li {
 	margin-bottom: 60px;
-	/*margin-left: -4px;*/
+}
+
+#gallery li img {
+	width: 200px;
+	height: 200px;
+	border: 4px solid white;
+	border-radius: 15px;
 }
 
 #overlay {
@@ -55,6 +138,7 @@ li {
 	width: 100%;
 	background: rgba(0,0,0,0.9);
 	position: fixed;
+	z-index: 1;
 }
 
 #captionContainer {
@@ -68,7 +152,7 @@ ul li h1 {
 }
 
 #overlay h1 {
-	font-size: 24px;
+	font-size: 32px;
 	color: #888;
 	margin-bottom: 20px;
 }
@@ -76,6 +160,7 @@ ul li h1 {
 #overlay h2 {
 	text-align: center;
 	color: white;
+	font-size: 20px;
 	text-align: left;
 	line-height: 2;
 }
@@ -90,12 +175,15 @@ ul li h1 {
 }
 
 #changeImage {
-	width: 100%;
+	max-width: 400px;
+	/*max-height: 800px;*/
+	display: block;
+	margin: 0 auto;
 }
 
 #leftArrow, #rightArrow {
 	position: absolute;
-	top: 200px;
+	top: 250px;
 	z-index: 1000;
 }
 
@@ -107,14 +195,18 @@ ul li h1 {
 	right: -100px;
 }
 
-@media (min-width: 533px) {
+.half {
+	background: white;
+}
+
+@media (min-width: 477px) {
 	li {
 		display: inline-block;
 		margin-right: 60px;
 	}
 }
 
-@media (min-width: 533px) and (max-width: 736px) {
+@media (min-width: 477px) and (max-width: 736px) {
 	li:nth-child(2n) {
 		margin-right: 0px;
 	}
@@ -138,5 +230,51 @@ ul li h1 {
 	}
 	li:nth-child(4n) {
 		margin-right: 0px;
+	}
+}
+
+@media (min-width: 737px) {
+	#topFixedContainer {
+		max-width: 737px;
+		margin: 0 auto;
+	}
+
+	
+	.half {
+		float: left;
+		width: calc(50% - 20px);
+		text-align: justify;
+		background: white;
+		border-radius: 15px;
+	}
+
+	.half:first-child {
+		margin-right: 20px;
+	}
+
+	.half:last-child {
+		margin-left: 20px;
+	}
+
+	.logo {
+		float: left;
+		margin: 0;
+		margin-top: 40px;
+	}
+
+	input {
+		float: right;
+		margin: 0;
+		margin-top: 30px;
+	}
+
+	#about {
+		margin-top: 120px;
+	}
+}
+
+@media (min-width: 980px) {
+	#topFixedContainer {
+		max-width: 980px;
 	}
 }
