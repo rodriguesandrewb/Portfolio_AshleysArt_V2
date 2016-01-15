@@ -89,12 +89,13 @@ function main() {
                 console.log('next image');
             break;
         }
-
-        $('#search').keyup(function() {
-            var search = $(this).val();
-            $('img:not([' + search + '])').css('border', '3px solid red');
-            $('img:contains(["' + search + '"])').css('border', '3px solid green');
-        });
+    });
+    
+    $('#search').on('keyup', function() {
+        $('#gallery img').css('opacity', '1.0');
+        var search = $(this).val();
+        $('#gallery img:not([' + search + '])').css('opacity', '0.2');
+        $('#gallery img[alt*="' + search + '"]').css('opacity', '1.0');
     });
 
     $('#overlay').click(function(event) {

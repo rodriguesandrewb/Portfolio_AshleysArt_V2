@@ -54,7 +54,7 @@ body {
 #fixedCont {
 	max-width: 980px;
 	margin: 0 auto;
-	padding: 0 20px 30px 20px;
+/*	padding-bottom: 30px;*/
 }
 
 #about {
@@ -195,6 +195,10 @@ ul li h1 {
 	right: -100px;
 }
 
+#search {
+    z-index: 10000;
+}
+
 .half {
 	background: white;
 }
@@ -219,6 +223,12 @@ ul li h1 {
 	li:nth-child(3n) {
 		margin-right: 0px;
 	}
+}
+
+@media (min-width: 737px) {
+    #fixedCont {
+        padding-bottom: 30px;
+    }
 }
 
 @media (min-width: 980px) {
