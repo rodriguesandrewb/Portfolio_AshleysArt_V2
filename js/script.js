@@ -1,31 +1,63 @@
+/*
+    Andrew Rodrigues
+    Developer & Designer
+    Art Gallery Page
+    Last Updated: 1/16/2016
+*/
+
 "use strict";
 
 function main() {
     function changeOverlay(imageLi) {
-        //Remove Active Class So It's Only on 1 LI
+        //Remove active class from any elements with it
         $('.activeImage').removeClass();
 
-        //Move from a up to the li
-        var imageListItem = $(imageLi);
+        if ($('#overlay').hasClass('newOpen')) {
+            $('.overlayContainer').css('opacity', 0);
+            $('#overlay').removeClass('newOpen');
+            console.log('newOpen')
+        } else {
 
-        //Add a class so we can easily keep track of the image li with the arrows
+        }
+
+        //Get new list item and add class to it
+        var imageListItem = $(imageLi);
         imageListItem.addClass('activeImage');
 
-        //Get values from the element
+        //Update overlay information
+
+        
+        $('#overlay').fadeIn('slow');
+        $('.overlayContainer').animate(
+            {
+                opacity: 0,
+            },
+            500,
+            function() {
+                overlayInfoUpdate(imageListItem);
+                $('.overlayContainer').animate(
+                {
+                    opacity: 1,
+                },
+                1000
+                );
+            }
+        );
+    }
+
+    $('#overlay').click(function(event) {
+        $(this).fadeOut('slow');
+        $(this).removeClass('newOpen');
+    });
+
+    function overlayInfoUpdate(imageListItem) {
         var title = $(imageListItem).children('h1').text();
         var originalImage = $(imageListItem).children('a').attr('href');
         var caption = $(imageListItem).children('a').children('img').attr('alt');
-
-        //Update the image source on the overlay, and the alt attr
         $('#changeImage').attr('src', originalImage);
         $('#changeImage').attr('alt', caption);
-
-        //Update title & caption
         $('#captionContainer').children('h1').text(title);
         $('#captionContainer').children('h2').text(caption);
-
-        //Show overlay
-        $('#overlay').fadeIn('slow');
     }
 
     function nextImage() {
@@ -60,6 +92,7 @@ function main() {
     //When clicking on the thumbnail run the function
     $('a').on('click', function() {
         var clickedImage = $(this).parent('li');
+        $('#overlay').addClass('newOpen');
         changeOverlay(clickedImage);
     });
 
@@ -98,9 +131,7 @@ function main() {
         $('#gallery img[alt*="' + search + '"]').css('opacity', '1.0');
     });
 
-    $('#overlay').click(function(event) {
-        $(this).fadeOut('slow');
-    });
+
 
     $(document).scroll(function() {
         var scrollVal = $(window).scrollTop();
