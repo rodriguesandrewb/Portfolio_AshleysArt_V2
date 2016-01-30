@@ -24,9 +24,6 @@ function main() {
         var imageListItem = $(imageLi);
         imageListItem.addClass('activeImage');
 
-        //Update overlay information
-
-        
         $('#overlay').fadeIn('slow');
         $('.overlayContainer').animate(
             {
@@ -43,8 +40,9 @@ function main() {
                 );
             }
         );
-    }
+    } // end changeOverlay()
 
+    // close out overlay
     $('#overlay').click(function(event) {
         $(this).fadeOut('slow');
         $(this).removeClass('newOpen');
