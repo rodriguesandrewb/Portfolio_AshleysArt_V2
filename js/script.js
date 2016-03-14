@@ -2,62 +2,14 @@
     Andrew Rodrigues
     Developer & Designer
     Art Gallery Page
-    Last Updated: 1/16/2016
+    Last Updated: 3/14/2016
 */
 
 "use strict";
 
 function main() {
-    function changeOverlay(imageLi) {
-        //Remove active class from any elements with it
-        $('.activeImage').removeClass();
-
-        if ($('#overlay').hasClass('newOpen')) {
-            $('.overlayContainer').css('opacity', 0);
-            $('#overlay').removeClass('newOpen');
-            console.log('newOpen')
-        } else {
-
-        }
-
-        //Get new list item and add class to it
-        var imageListItem = $(imageLi);
-        imageListItem.addClass('activeImage');
-
-        $('#overlay').fadeIn('slow');
-        $('.overlayContainer').animate(
-            {
-                opacity: 0,
-            },
-            500,
-            function() {
-                overlayInfoUpdate(imageListItem);
-                $('.overlayContainer').animate(
-                {
-                    opacity: 1,
-                },
-                1000
-                );
-            }
-        );
-    } // end changeOverlay()
-
-    // close out overlay
-    $('#overlay').click(function(event) {
-        $(this).fadeOut('slow');
-        $(this).removeClass('newOpen');
-    });
-
-    function overlayInfoUpdate(imageListItem) {
-        var title = $(imageListItem).children('h1').text();
-        var originalImage = $(imageListItem).children('a').attr('href');
-        var caption = $(imageListItem).children('a').children('img').attr('alt');
-        $('#changeImage').attr('src', originalImage);
-        $('#changeImage').attr('alt', caption);
-        $('#captionContainer').children('h1').text(title);
-        $('#captionContainer').children('h2').text(caption);
-    }
-
+	// ************************************ ABSTRACTIONS ************************************************************************
+	
     function nextImage() {
         //If the image is the last, loop back to the first
         if ($('.activeImage').is(':last-child')) {
@@ -82,6 +34,53 @@ function main() {
         }
     }
 
+	function changeOverlay(imageLi) {
+        //Remove active class from any elements with it
+        $('.activeImage').removeClass();
+
+        if ($('#overlay').hasClass('newOpen')) {
+            $('.overlayContainer').css('opacity', 0);
+            $('#overlay').removeClass('newOpen');
+            console.log('newOpen')
+        } else {
+			// or what
+        }
+
+        //Get new list item and add class to it
+        var imageListItem = $(imageLi);
+        imageListItem.addClass('activeImage');
+
+        $('#overlay').fadeIn('slow');
+        
+        $('.overlayContainer').animate(
+            {
+                opacity: 0,
+            },
+            500,
+            function() {
+                overlayInfoUpdate(imageListItem);
+                $('.overlayContainer').animate(
+                {
+                    opacity: 1,
+                },
+                1000
+                );
+            }
+        );
+    } // end changeOverlay()
+    
+    function overlayInfoUpdate(imageListItem) {
+        var title = $(imageListItem).children('h1').text();
+        var originalImage = $(imageListItem).children('a').attr('href');
+        var caption = $(imageListItem).children('a').children('img').attr('alt');
+        $('#changeImage').attr('src', originalImage);
+        $('#changeImage').attr('alt', caption);
+        $('#captionContainer').children('h1').text(title);
+        $('#captionContainer').children('h2').text(caption);
+    };
+    
+	// ************************************ CONTROLS ************************************************************************
+
     //Stop link from opening a page to the href value
     $('#gallery a').click(function(event) {
         event.preventDefault();
@@ -103,7 +102,7 @@ function main() {
         event.stopPropagation()
         nextImage();
     });
-
+    
     $(document).keydown(function(e) {
         if ($('li').is('.activeImage')) {
         } else {
@@ -122,26 +121,44 @@ function main() {
         }
     });
     
+    // ************************************ EVENTS ************************************************************************
+
+	// close out overlay
+    $('#overlay').click(function(event) {
+        $(this).fadeOut('slow');
+        $(this).removeClass('newOpen');
+    });
+    
+    // sticky nav
+    function stickyNav() {
+	    $(document).scroll(function() {
+	        var scrollVal = $(window).scrollTop();
+	        console.log(scrollVal);
+	        if (scrollVal > 0) {
+	            $('#topFixed').addClass('sticky');
+	            $('#topFixed').removeClass('notSticky');
+	        } else {
+	            $('#topFixed').removeClass('sticky');
+	            $('#topFixed').addClass('notSticky');
+	        }
+	    });
+    };
+    
     $('#search').on('keyup', function() {
         $('#gallery img').css('opacity', '1.0');
         var search = $(this).val();
         $('#gallery img:not([' + search + '])').css('opacity', '0.2');
         $('#gallery img[alt*="' + search + '"]').css('opacity', '1.0');
     });
-
-
-
-    $(document).scroll(function() {
-        var scrollVal = $(window).scrollTop();
-        console.log(scrollVal);
-        if (scrollVal > 0) {
-            $('#topFixed').addClass('sticky');
-            $('#topFixed').removeClass('notSticky');
-        } else {
-            $('#topFixed').removeClass('sticky');
-            $('#topFixed').addClass('notSticky');
-        }
-    });
+	
+	// ************************************ LOGS ************************************************************************
+	
+	/* 
+		03/14/2016:
+			-Cleaned up code
+			-Created abstractions
+			-Made functions
+	*/
 }
 
 $(document).ready(main());
